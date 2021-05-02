@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+string test(string s)
+{
+	int key = 574;
+	int n = s.length();
+	for (int i = 0; i < n; i++) {
+		key *= s[i] / 5;
+		key += s[i];
+	}
+
+	char check[33] = {0};
+	_itoa_s(key, check, 2);
+	bool neg = false;
+	if (check[0] == '1' && strlen(check) > 31) {
+		key -= 1;
+		key = ~key;
+		neg = true;
+	}
+
+	string result;
+	int temp;
+	while (key > 0) {
+		temp = key % 10;
+		key /= 10;
+		result.push_back(temp + '0');
+	}
+	if (neg) {
+		result.push_back('-');
+	}
+	reverse(result.begin(), result.end());
+	return result;
+}
+
+int main()
+{
+	string input;
+	do {
+		system("cls");
+		cout << "Nhap name: ";
+		getline(cin, input);
+		if (input.length() <= 4) {
+			cout << "\nNhap lai!";
+			system("pause");
+		}
+	} while (input.length() <= 4);
+
+	int Min = min(static_cast<int>(input.length()), 6);
+	string s;
+	for (int i = 0; i < Min; i++){
+		s += input[i];
+	}
+	cout << test(s) << endl;
+	system("pause");
+}
